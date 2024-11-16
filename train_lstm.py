@@ -2,7 +2,6 @@
 import numpy as np
 import pandas as pd
 from keras import Sequential
-from keras.src.callbacks import history
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from sklearn.model_selection import train_test_split
 
