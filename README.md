@@ -8,12 +8,14 @@ Cài đặt thư viện có trong file setup
 pip install -r setup
 
 Tìm kiếm hình ảnh dùng để training AI
+
+
 ![image](https://github.com/user-attachments/assets/ccb786ad-cdac-4116-aac9-1d4bc262d786)
-Bao	
+
 ![image](https://github.com/user-attachments/assets/e3a66ef2-dee7-4db7-91ff-03d6db072bfa)
-Búa 
+
 ![image](https://github.com/user-attachments/assets/6675090f-1ece-45d1-b229-3dea9e121436)
-Kéo
+
 
 Đặt tên cho từng file lần lượt là 0 1 và 2 để hiển thị lên trên giao diện của người dùng
 2.Tạo thư viện để sử dụng thư viện mediapipe dùng để nhận diện bàn tay và đếm số ngón tay…
