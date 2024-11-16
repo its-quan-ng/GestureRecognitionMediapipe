@@ -1,4 +1,5 @@
-Demo kéo búa bao bằng mediapipe
+Game tương tác kéo búa bao bằng mediapipe hand landmarks của Google AI
+
 1.Cài đặt thư viện Mediapipe và OpenCV
 Tạo file setup chứa các thư viện trên
 mediapipe
