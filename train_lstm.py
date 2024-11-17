@@ -1,4 +1,3 @@
-# train_lstm.py
 import numpy as np
 import pandas as pd
 from keras import Sequential
@@ -15,8 +14,8 @@ datasets_dict = {
     'THREE_3': pd.read_csv('THREE_3.txt'),
     'FOUR': pd.read_csv('FOUR.txt'),
     'PALM': pd.read_csv('PALM.txt'),
-    'PALM_inverse': pd.read_csv('PALM.txt'),
     'STOP': pd.read_csv('STOP.txt'),
+    'STOP_inverse': pd.read_csv('STOP_inverse.txt'),
     'OK': pd.read_csv('OK.txt'),
     'CALL': pd.read_csv('CALL.txt'),
     'LIKE': pd.read_csv('LIKE.txt'),
@@ -30,7 +29,7 @@ datasets_dict = {
     'MINIHEART': pd.read_csv('MINIHEART.txt')
 }
 
-# Debug: Print shapes of all datasets
+# Print shapes of all datasets
 print("\nChecking dataset shapes:")
 for name, df in datasets_dict.items():
     print(f"{name}: Shape={df.iloc[:, 1:].shape}, Columns={df.iloc[:, 1:].shape[1]}")
@@ -50,7 +49,7 @@ datasets = [
     (datasets_dict['THREE_3'], 2),  # Same as THREE
     (datasets_dict['FOUR'], 3),
     (datasets_dict['PALM'], 4),
-    (datasets_dict['PALM_inverse'], 4),
+    (datasets_dict['STOP_inverse'], 5),
     (datasets_dict['STOP'], 5),
     (datasets_dict['OK'], 6),
     (datasets_dict['CALL'], 7),
@@ -75,6 +74,7 @@ for dataset, label in datasets:
 
 X, y = np.array(X), np.array(y)
 print(X.shape, y.shape)
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 model = Sequential()
@@ -84,16 +84,16 @@ model.add(LSTM(units=64, return_sequences=True))
 model.add(Dropout(0.2))
 model.add(LSTM(units=64))
 model.add(Dropout(0.2))
-model.add(Dense(units=16, activation="softmax"))  # 11 classes (0-10)
-
+model.add(Dense(units=16, activation="softmax"))  # 15 classes (0-15)
 model.compile(optimizer="adam", metrics=['accuracy'],
              loss="sparse_categorical_crossentropy")
 
 model.fit(X_train, y_train, epochs=20, batch_size=32,
           validation_data=(X_test, y_test))
+model.save('hand_gesture_model.h5')
+
 loss, accuracy = model.evaluate(X_test, y_test)
 print(f"Độ chính xác trên tập kiểm tra: {accuracy:.3f}")
 print(f"Loss trên tập kiểm tra: {loss:.4f}")
 
 
-model.save('hand_gesture_model.h5')

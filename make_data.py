@@ -5,9 +5,10 @@ import pandas as pd
 # Initialize webcam
 cap = cv2.VideoCapture(0)
 
-# Initialize MediaPipe Hands
+# Khởi tạo thư viện Mediapipe
 mpHands = mp.solutions.hands
-hands = mpHands.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
+hands = mpHands.Hands(static_image_mode=False, max_num_hands=1,
+                      min_detection_confidence=0.5, min_tracking_confidence=0.5)
 mpDraw = mp.solutions.drawing_utils
 
 
@@ -34,25 +35,25 @@ def draw_landmark_on_image(mpDraw, results, img):
 
 
 lm_list = []
-label = "MINIHEART"  # Change this for different gestures
+label = "STOP_inverse"  # Đổi các cử chỉ khác
 no_of_frames = 500
 
 while len(lm_list) < no_of_frames:
     ret, frame = cap.read()
     frame = cv2.flip(frame, 1)
     if ret:
-        # Process frame
+        # Xử lý frame
         frame_RGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = hands.process(frame_RGB)
 
+        # Nhận diện Hand landmarks:
         if results.multi_hand_landmarks:
-            # Get landmarks data
             lm = make_landmark_timestep(results)
             lm_list.append(lm)
-            # Draw landmarks
+            # Vẽ khung xương lên ảnh
             frame = draw_landmark_on_image(mpDraw, results, frame)
 
-        # Show frame count
+        # Hiển thị frame, số frame đã count
         cv2.putText(frame, f'Frames: {len(lm_list)}/{no_of_frames}',
                     (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (5, 5, 50), 2)
 
@@ -60,7 +61,7 @@ while len(lm_list) < no_of_frames:
         if cv2.waitKey(1) == ord('q'):
             break
 
-# Save to file
+# Viết vào file csv
 df = pd.DataFrame(lm_list)
 df.to_csv(label + ".txt")
 cap.release()
