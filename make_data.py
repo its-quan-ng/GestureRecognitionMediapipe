@@ -35,7 +35,7 @@ def draw_landmark_on_image(mpDraw, results, img):
 
 
 lm_list = []
-label = "STOP_inverse"  # Đổi các cử chỉ khác
+label = "THREE"  # Đổi các cử chỉ khác
 no_of_frames = 500
 
 while len(lm_list) < no_of_frames:

@@ -51,12 +51,9 @@ def detect(model, lm_list):
     lm_list = np.array(lm_list)
     lm_list = np.expand_dims(lm_list, axis=0)
     results = model.predict(lm_list)
-
     max_prob = np.max(results[0])
     predicted_class = np.argmax(results, axis=1)[0]
-
     CONFIDENCE_THRESHOLD = 0.7
-
     labels = {
         0: "ONE",
         1: "TWO",
@@ -75,19 +72,17 @@ def detect(model, lm_list):
         14: "GUN",
         15: "MINI HEART"
     }
-
     if max_prob < CONFIDENCE_THRESHOLD:
         label = "UNKNOWN"
     else:
         label = labels.get(predicted_class, "UNKNOWN")
-
     print(f"Confidence: {max_prob:.2f}, Prediction: {label}")
     return label
 
 
 # Warmup
 i = 0
-warmup_frames = 60
+warmup_frames = 20
 
 while True:
     ret, frame = cap.read()
